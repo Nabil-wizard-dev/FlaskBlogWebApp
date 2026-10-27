@@ -1,8 +1,9 @@
 from flask import abort, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
+from werkzeug.security import generate_password_hash
 
 from blog import app, db
-from blog.forms import LoginForm, PostForm
+from blog.forms import LoginForm, PostForm, RegistrationForm
 from blog.models import Post, User
 from blog.utils import save_picture, title_slugifier
 
@@ -59,7 +60,7 @@ def post_create():
                 db.session.add(new_post)
                 db.session.commit()
                 flash(
-                    "C'è stato un problema con l'upload dell'immagine. Cambia immagine e riprova."
+                    "Il y a eu un problème avec le téléchargement de l'image. Changez l'image et réessayez."
                 )
                 return redirect(url_for("post_update", post_id=new_post.id))
 
@@ -88,7 +89,7 @@ def post_update(post_id):
             except Exception:
                 db.session.commit()
                 flash(
-                    "C'è stato un problema con l'upload dell'immagine. Cambia immagine e riprova."
+                    "Il y a eu un problème avec le téléchargement de l'image. Changez l'image et réessayez."
                 )
                 return redirect(url_for("post_update", post_id=post_instance.id))
 
@@ -132,7 +133,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash("username e password non combaciano!")
+            flash("le nom d'utilisateur et le mot de passe ne correspondent pas !")
             return redirect(url_for("login"))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for("homepage"))
@@ -143,3 +144,44 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("homepage"))
+
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = generate_password_hash(form.password.data)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash('Votre compte a été créé avec succès ! Vous pouvez maintenant vous connecter.', 'success')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Inscription', form=form)
+
+
+@app.route("/my-posts")
+@login_required
+def my_posts():
+    page_number = request.args.get("page", 1, type=int)
+    posts = Post.query.filter_by(author=current_user).order_by(Post.created_at.desc()).paginate(page_number, 6, True)
+
+    if posts.has_next:
+        next_page = url_for("my_posts", page=posts.next_num)
+    else:
+        next_page = None
+
+    if posts.has_prev:
+        previous_page = url_for("my_posts", page=posts.prev_num)
+    else:
+        previous_page = None
+
+    return render_template(
+        "homepage.html",
+        posts=posts,
+        current_page=page_number,
+        next_page=next_page,
+        previous_page=previous_page,
+        show_my_posts=True
+    )

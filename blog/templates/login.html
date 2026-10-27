@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block content %}
 <div class="container text-center mt-3">
     <br>
-    <h2>Admin Login</h2>
+    <h2>Connexion De L'utilisateur</h2>
     <div class="row no-gutters justify-content-center">
         <div class="col-md-4">
             
@@ -34,6 +34,10 @@
                 <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
                 {{ form.submit(class="btn btn-outline-secondary") }}
             </form>
+
+            <div class="mt-3">
+                <p>Pas encore de compte ? <a href="{{ url_for('register') }}">S'inscrire</a></p>
+            </div>
 
             <div class="mt-3">
                 {% with messages = get_flashed_messages() %}

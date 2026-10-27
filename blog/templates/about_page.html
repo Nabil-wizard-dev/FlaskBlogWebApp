@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}About Me{% endblock %}
+{% block title %}À propos de moi{% endblock %}
 
 {% block content %}
 <div class="container content-container">
@@ -9,11 +9,17 @@
 
         <div class="col-md-9 order-md-2">
             <div class="about-page-block">
-                <p class="lead">About Me.</p>
+                <p class="lead">À propos de moi.</p>
                 <hr>
-                {{ lipsum() }}     
+                <p>Bienvenue sur notre blog, un espace dédié au partage de connaissances et d'expériences. Notre mission est de créer une communauté dynamique où les idées peuvent s'épanouir et où chaque voix compte.</p>
+
+                <p>Depuis notre création, nous nous efforçons de publier du contenu de qualité qui inspire, éduque et engage nos lecteurs. Notre équipe de rédacteurs passionnés travaille sans relâche pour vous offrir des articles pertinents, bien recherchés et enrichissants.</p>
+
+                <p>Nous croyons fermement en la puissance du partage de connaissances. Chaque article que nous publions est le fruit d'une réflexion approfondie et d'un engagement sincère envers l'excellence. Notre objectif est de créer un espace où vous pouvez non seulement consommer du contenu, mais aussi participer activement à la conversation.</p>
+
+                <p>Que vous soyez un lecteur régulier ou un nouveau visiteur, nous sommes ravis de vous accueillir dans notre communauté. Ensemble, continuons à explorer, apprendre et grandir.</p>
                 <hr>
-                <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('contact') }}">Contact Me.</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('contact') }}">Contactez-Nous.</a>
             </div>    
         </div>
 

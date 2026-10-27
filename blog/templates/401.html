@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}401 - Accesso Negato{% endblock %}
+{% block title %}401 - Accès refusé{% endblock %}
 
 {% block content %}
 <div class="container content-container">
@@ -9,12 +9,12 @@
 
         <div class="col-md-9 order-md-2">
             <div class="about-page-block">
-                <p class="lead">Errore 401.</p>
+                <p class="lead">Erreur 401.</p>
                 <hr>
-                <p>Accesso Negato.</p>
-                <p>Non si dispone dei permessi necessari a poter effettuare l'operazione.</p>
+                <p>Accès refusé.</p>
+                <p>Vous n'avez pas les permissions nécessaires pour effectuer cette opération.</p>
                 <hr>
-                <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('homepage') }}">↩ Tutti i Post</a>            
+                <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('homepage') }}">↩ Tous les articles</a>            
             </div>    
 
         </div>

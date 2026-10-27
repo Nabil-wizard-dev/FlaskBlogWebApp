@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Post Editor{% endblock %}
+{% block title %}Mis à jour de l'article{% endblock %}
 
 {% block content %}
 <div class="container content-container mt-3 px-3 px-lg-0">
     {% if request.path == "/create-post" %}
-    <h2>Crea un nuovo Post</h2>
+    <h2>Créer un nouveau post</h2>
     {% else %}
-    <h2>Aggiorna il Post</h2>
+    <h2>Mettre à jour le post</h2>
     {% endif %}
     <div class="row no-gutters">
         <div class="col">

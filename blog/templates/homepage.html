@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{% if show_my_posts %}&nbsp;Mes Posts{% else %}Accueil{% endif %}{% endblock %}
 
 {% block content %}
 <div class="container content-container">
     <div class="row no-gutters">
         
         <div class="col-md-9 order-md-2">
+            {% if show_my_posts %}
+            <h2 class="mb-4">Mes Posts</h2>
+            {% endif %}
             {% for post in posts.items %}
             <div class="single-post-home">   
                 <h5>
@@ -21,7 +24,7 @@
                 {% if post.description %}
                 <p class="p-small-one text-muted mb-0">
                     {{ post.description }}
-                    <a class="read-more" href="{{ url_for('post_detail', post_slug=post.slug) }}">Leggi articolo.</a>
+                    <a class="read-more" href="{{ url_for('post_detail', post_slug=post.slug) }}">Lire l'article.</a>
                 </p>
                 {% endif %}
             </div>
@@ -30,13 +33,13 @@
             <div class="pagination-block">
                 {% if previous_page %}
                 {% if current_page == 2 %}
-                <a class="btn btn-sm btn-outline-secondary" href="/">↩ Indietro</a>
+                <a class="btn btn-sm btn-outline-secondary" href="/">↩ Précédent</a>
                 {% else %}
-                <a class="btn btn-sm btn-outline-secondary" href="{{ previous_page }}">↩ Indietro</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{{ previous_page }}">↩ Précédent</a>
                 {% endif %}
                 {% endif %}
                 {% if next_page %}
-                <a class="btn btn-sm btn-outline-secondary" href="{{ next_page }}">↪ Avanti</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{{ next_page }}">Suivant ↪</a>
                 {% endif %}
             </div>
         </div>
